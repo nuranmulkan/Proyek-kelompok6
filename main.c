@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 void tampilanAwal() {
     printf("============================================\n");
@@ -26,11 +27,10 @@ int main () {
     if (fpw == NULL) {
         printf("hallo");
         printf("gagal membuka file!");
-        printf("hallo 1");
         return EXIT_FAILURE;
     }
 
-    char username[20],password[20];
+    char username[50],password[50];
 
     printf("masukkan username anda :");
     fgets(username,sizeof(username),stdin);
@@ -58,7 +58,7 @@ int main () {
 
     fclose(fpr);
     char *string[3];
-    char user[20], pass[20];
+    char user[50], pass[50];
     int ctrl = 0;
 
     string[0] = strtok(username,"@");
@@ -76,7 +76,7 @@ int main () {
     printf("=============================================\n");
 
     
-    char userLogin[10], passLogin[10];
+    char userLogin[], passLogin[];
 
     printf("\nUsername:");
     fgets(userLogin,sizeof(userLogin),stdin);
@@ -89,8 +89,8 @@ int main () {
     if((strcmp(userLogin, user)) == 0 && (strcmp(passLogin, pass) == 0)) {
         printf("SELAMAT ANDA BERHASIL LOGIN!\n");
     } else {
-        printf("AND LOGIN GAGAL!\n");
-    }
+        printf("LOGIN ANDA GAGAL!\n");
+
     printf("=============================================\n");
     printf("=  Tekan enter untuk melanjutkan permainan  =\n");
     printf("=============================================\n");
