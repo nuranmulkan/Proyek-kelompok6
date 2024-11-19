@@ -19,24 +19,22 @@ void tampilanAwal() {
 
 }
 
-int main () {
+int main (int banyakArgumen, char *argumen[]) {
     tampilanAwal();
-
 
     FILE *fpw = fopen("database/login.bin","wb");
     if (fpw == NULL) {
-        printf("hallo");
         printf("gagal membuka file!");
         return EXIT_FAILURE;
     }
 
     char username[50],password[50];
 
-    printf("masukkan username anda :");
+    printf("masukkan username :");
     fgets(username,sizeof(username),stdin);
     username[strcspn(username, "\n")] = '\0';
     
-    printf("masukkan password anda :");
+    printf("masukkan password :");
     fgets(password,sizeof(password),stdin);
     password[strcspn(password, "\n")] = '\0';
 
@@ -72,29 +70,42 @@ int main () {
     printf("\n\n=============================================\n");
     printf("=         Registrasi Anda Berhasil          =\n");
     printf("=============================================\n");
-    printf("= Silahkan Log in untuk memulai permainan!  =\n");
+    printf("=  Silahkan Login ntuk memulai permainan!   =\n");
     printf("=============================================\n");
-
-    
-    char userLogin[], passLogin[];
-
-    printf("\nUsername:");
-    fgets(userLogin,sizeof(userLogin),stdin);
-    userLogin[strcspn(userLogin, "\n")] = '\0';
-
-    printf("Password:");
-    fgets(passLogin,sizeof(passLogin),stdin);
-    passLogin[strcspn(passLogin, "\n")] = '\0';
-    
-    if((strcmp(userLogin, user)) == 0 && (strcmp(passLogin, pass) == 0)) {
-        printf("SELAMAT ANDA BERHASIL LOGIN!\n");
-    } else {
-        printf("LOGIN ANDA GAGAL!\n");
-
-    printf("=============================================\n");
-    printf("=  Tekan enter untuk melanjutkan permainan  =\n");
-    printf("=============================================\n");
+    printf("=       Tekan enter untuk melanjutkan       =\n");
+    printf("=============================================\n\n");
     getchar();
+
+    char userLog[20], passLog[20];
+    printf("Masukkan username :");
+    fgets(userLog, sizeof(userLog), stdin);
+
+    printf("Masukkan password :");
+    fgets(passLog, sizeof(passLog), stdin);
+
+    
+    char userLogin[10], passLogin[10];
+    if (banyakArgumen != 3) {
+        printf("Gagal Login!");
+        printf("Cara penggunaan : ./main Username Password!");
+    }
+
+    strcpy(userLogin,argumen[1]);
+    strcpy(passLogin,argumen[2]);
+
+    if((strcmp(userLogin, user)) == 0 && (strcmp(passLogin, pass) == 0)) {
+        printf("\n\n=============================================\n");    
+        printf("=        SELAMAT ANDA BERHASIL LOGIN!       =\n");
+        printf("=============================================\n");
+        printf("=  Tekan enter untuk melanjutkan permainan  =\n");
+        printf("=============================================\n");
+        getchar();
+
+    } else {
+        printf("=============================================\n");    
+        printf("=             ANDA GAGAL LOGIN!             =\n");
+        printf("=============================================\n");
+    }
 
     return 0;
 }
