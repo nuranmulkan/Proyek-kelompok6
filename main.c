@@ -62,10 +62,8 @@ int main() {
             password[strcspn(password, "\n")] = '\0';
         } while (!cekKosong(password));
 
-        strcat(username, "@");
-        strcat(username, password);
-
-        fwrite(username, sizeof(char), sizeof(username) / sizeof(char), fpw);
+        fwrite(username, sizeof(char), strlen(username), fpw);
+        fwrite(password, sizeof(char), strlen(password), fpw);
         fclose(fpw);
 
         FILE *fpr = fopen("database/login.bin", "rb");
@@ -74,20 +72,9 @@ int main() {
             return EXIT_FAILURE;
         }
 
-        fread(username, sizeof(char), sizeof(username) / sizeof(char), fpr);
+        fread(username, sizeof(char), sizeof(username), fpr);
+        fread(password, sizeof(char), sizeof(password), fpr);
         fclose(fpr);
-
-        char *string[3];
-        char user[50], pass[50];
-        int ctrl = 0;
-
-        string[0] = strtok(username, "@");
-        while (string[ctrl++] != NULL) {
-            string[ctrl] = strtok(NULL, "@");
-        }
-
-        strcpy(user, string[0]);
-        strcpy(pass, string[1]);
 
         printf("\n\n=============================================\n");
         printf("=         Registrasi Anda Berhasil          =\n");
@@ -107,7 +94,7 @@ int main() {
         fgets(passLog, sizeof(passLog), stdin);
         passLog[strcspn(passLog, "\n")] = '\0';
 
-        if ((strcmp(userLog, user) == 0) && (strcmp(passLog, pass) == 0)) {
+        if ((strcmp(userLog, username) == 0) && (strcmp(passLog, password) == 0)) {
             printf("\n\n=============================================\n");
             printf("=        SELAMAT ANDA BERHASIL LOGIN!       =\n");
             printf("=============================================\n");
