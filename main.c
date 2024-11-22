@@ -37,6 +37,58 @@ int cekKosong(char *input) {
     return 1;
 }
 
+void pertanyaan1(int *skor) {
+    printf("\nPertanyaan 1: Apa ibu kota Indonesia?\n");
+    printf("a. Jakarta\nb. Bandung\nc. Surabaya\nd. Yogyakarta\n");
+    printf("Jawaban Anda: ");
+    
+    time_t start_time, end_time;
+    double elapsed_time;
+    char jawaban1;
+
+    time(&start_time);
+    scanf(" %c", &jawaban1);
+    time(&end_time);
+
+    elapsed_time = difftime(end_time, start_time);
+
+    if (elapsed_time > 30) {
+        printf("\nWaktu habis! Jawaban tidak dihitung.\n");
+    } else {
+        if (jawaban1 == 'a' || jawaban1 == 'A') {
+            printf("Jawaban Anda benar!\n");
+            *skor += 1000;
+        } else {
+            printf("Jawaban Anda salah.\n");
+        }
+    }
+    printf("\n=============================================\n");
+}
+
+void permainan(int *skor) {
+    char pilihan[2];
+    
+    while (1) {
+        tampilkanMenu(*skor);
+        fgets(pilihan, sizeof(pilihan), stdin);
+        pilihan[strcspn(pilihan, "\n")] = '\0';
+
+        if (pilihan[0] == '1') {
+            pertanyaan1(skor);
+        } else if (pilihan[0] == '2') {
+            printf("\n=============================================\n");
+            printf("=        Terima kasih telah bermain!        =\n");
+            printf("=============================================\n");
+            break;
+        } else if (pilihan[0] == '3') {
+            printf("\n=============================================\n");
+            printf("=            Permainan di-restart!          =\n");
+            printf("=============================================\n");
+            break;
+        }
+    }
+}
+
 int main() {
     int restart = 1;
     while (restart) {
@@ -112,53 +164,9 @@ int main() {
         }
 
         int skor = 0;
-        char pilihan[2];
-
-        while (1) {
-            tampilkanMenu(skor);
-            fgets(pilihan, sizeof(pilihan), stdin);
-            pilihan[strcspn(pilihan, "\n")] = '\0';
-
-            if (pilihan[0] == '1') {
-                printf("\nPertanyaan 1: Apa ibu kota Indonesia?\n");
-                printf("a. Jakarta\nb. Bandung\nc. Surabaya\nd. Yogyakarta\n");
-                printf("Jawaban Anda: ");
-                
-                time_t start_time, end_time;
-                double elapsed_time;
-                char jawaban1;
-
-                time(&start_time);
-                scanf(" %c", &jawaban1);
-                time(&end_time);
-
-                elapsed_time = difftime(end_time, start_time);
-
-                if (elapsed_time > 30) {
-                    printf("\nWaktu habis! Jawaban tidak dihitung.\n");
-                } else {
-                    if (jawaban1 == 'a' || jawaban1 == 'A') {
-                        printf("Jawaban Anda benar!\n");
-                        skor += 1000;
-                    } else {
-                        printf("Jawaban Anda salah.\n");
-                    }
-                }
-
-                printf("\n=============================================\n");
-            } else if (pilihan[0] == '2') {
-                printf("\n=============================================\n");
-                printf("=        Terima kasih telah bermain!        =\n");
-                printf("=============================================\n");
-                restart = 0;
-                break;
-            } else if (pilihan[0] == '3') {
-                printf("\n=============================================\n");
-                printf("=            Permainan di-restart!          =\n");
-                printf("=============================================\n");
-                break;
-            }
-        }
+        permainan(&skor);
+        
+        restart = 0;
     }
 
     return 0;
