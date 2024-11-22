@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <time.h>
 
 void tampilanAwal() {
     printf("============================================\n");
@@ -120,19 +121,29 @@ int main() {
             pilihan[strcspn(pilihan, "\n")] = '\0';
 
             if (pilihan[0] == '1') {
-                // Pertanyaan contoh aja
                 printf("\nPertanyaan 1: Apa ibu kota Indonesia?\n");
                 printf("a. Jakarta\nb. Bandung\nc. Surabaya\nd. Yogyakarta\n");
                 printf("Jawaban Anda: ");
+                
+                time_t start_time, end_time;
+                double elapsed_time;
                 char jawaban1;
-                scanf(" %c", &jawaban1);
-                getchar();
 
-                if (jawaban1 == 'a' || jawaban1 == 'A') {
-                    printf("Jawaban Anda benar!\n");
-                    skor += 1000;
+                time(&start_time);
+                scanf(" %c", &jawaban1);
+                time(&end_time);
+
+                elapsed_time = difftime(end_time, start_time);
+
+                if (elapsed_time > 30) {
+                    printf("\nWaktu habis! Jawaban tidak dihitung.\n");
                 } else {
-                    printf("Jawaban Anda salah.\n");
+                    if (jawaban1 == 'a' || jawaban1 == 'A') {
+                        printf("Jawaban Anda benar!\n");
+                        skor += 1000;
+                    } else {
+                        printf("Jawaban Anda salah.\n");
+                    }
                 }
 
                 printf("\n=============================================\n");
