@@ -16,52 +16,61 @@ void tampilanAwal() {
     printf("=                                          =\n");
     printf("============================================\n");
     getchar();
-
 }
 
-int main (int banyakArgumen, char *argumen[]) {
+int cekKosong(char *input) {
+    if (strlen(input) == 0) {
+        printf("Input tidak boleh kosong. Silakan coba lagi.\n");
+        return 0;
+    }
+    return 1;
+}
+
+int main() {
     tampilanAwal();
 
-    FILE *fpw = fopen("database/login.bin","wb");
+    FILE *fpw = fopen("database/login.bin", "wb");
     if (fpw == NULL) {
-        printf("gagal membuka file!");
+        printf("Gagal membuka file!");
         return EXIT_FAILURE;
     }
 
-    char username[50],password[50];
+    char username[50], password[50];
 
-    printf("masukkan username :");
-    fgets(username,sizeof(username),stdin);
-    username[strcspn(username, "\n")] = '\0';
-    
-    printf("masukkan password :");
-    fgets(password,sizeof(password),stdin);
-    password[strcspn(password, "\n")] = '\0';
+    do {
+        printf("Masukkan username: ");
+        fgets(username, sizeof(username), stdin);
+        username[strcspn(username, "\n")] = '\0';
+    } while (!cekKosong(username));
+
+    do {
+        printf("Masukkan password: ");
+        fgets(password, sizeof(password), stdin);
+        password[strcspn(password, "\n")] = '\0';
+    } while (!cekKosong(password));
 
     strcat(username, "@");
-    strcat(username,password);
+    strcat(username, password);
 
-    fwrite(username,sizeof(char),sizeof(username)/sizeof(char),fpw);
-
+    fwrite(username, sizeof(char), sizeof(username) / sizeof(char), fpw);
     fclose(fpw);
 
-    FILE *fpr = fopen("database/login.bin","rb");
-
+    FILE *fpr = fopen("database/login.bin", "rb");
     if (fpr == NULL) {
-        printf("gagal membuka file!");
+        printf("Gagal membuka file!");
         return EXIT_FAILURE;
     }
 
-    fread(username,sizeof(char),sizeof(username)/sizeof(char),fpr);
-
+    fread(username, sizeof(char), sizeof(username) / sizeof(char), fpr);
     fclose(fpr);
+
     char *string[3];
     char user[50], pass[50];
     int ctrl = 0;
 
-    string[0] = strtok(username,"@");
-    while(string[ctrl++] != NULL) {
-        string[ctrl] = strtok(NULL,"@");
+    string[0] = strtok(username, "@");
+    while (string[ctrl++] != NULL) {
+        string[ctrl] = strtok(NULL, "@");
     }
 
     strcpy(user, string[0]);
@@ -70,7 +79,7 @@ int main (int banyakArgumen, char *argumen[]) {
     printf("\n\n=============================================\n");
     printf("=         Registrasi Anda Berhasil          =\n");
     printf("=============================================\n");
-    printf("=  Silahkan Login ntuk memulai permainan!   =\n");
+    printf("=  Silahkan Login untuk memulai permainan!  =\n");
     printf("=============================================\n");
     printf("=       Tekan enter untuk melanjutkan       =\n");
     printf("=============================================\n\n");
@@ -79,30 +88,21 @@ int main (int banyakArgumen, char *argumen[]) {
     char userLog[20], passLog[20];
     printf("Masukkan username :");
     fgets(userLog, sizeof(userLog), stdin);
+    userLog[strcspn(userLog, "\n")] = '\0';
 
     printf("Masukkan password :");
     fgets(passLog, sizeof(passLog), stdin);
+    passLog[strcspn(passLog, "\n")] = '\0';
 
-    
-    char userLogin[10], passLogin[10];
-    if (banyakArgumen != 3) {
-        printf("Gagal Login!");
-        printf("Cara penggunaan : ./main Username Password!");
-    }
-
-    strcpy(userLogin,argumen[1]);
-    strcpy(passLogin,argumen[2]);
-
-    if((strcmp(userLogin, user)) == 0 && (strcmp(passLogin, pass) == 0)) {
-        printf("\n\n=============================================\n");    
+    if ((strcmp(userLog, user) == 0) && (strcmp(passLog, pass) == 0)) {
+        printf("\n\n=============================================\n");
         printf("=        SELAMAT ANDA BERHASIL LOGIN!       =\n");
         printf("=============================================\n");
         printf("=  Tekan enter untuk melanjutkan permainan  =\n");
         printf("=============================================\n");
         getchar();
-
     } else {
-        printf("=============================================\n");    
+        printf("=============================================\n");
         printf("=             ANDA GAGAL LOGIN!             =\n");
         printf("=============================================\n");
     }
