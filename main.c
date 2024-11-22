@@ -4,6 +4,11 @@
 #include <ctype.h>
 #include <time.h>
 
+typedef struct {
+    char username[50];
+    char password[50];
+} User;
+
 void tampilanAwal() {
     printf("============================================\n");
     printf("=                                          =\n");
@@ -89,43 +94,72 @@ void permainan(int *skor) {
     }
 }
 
+void simpanDataUser(User *user) {
+    FILE *fpw = fopen("database/login.bin", "wb");
+    if (fpw == NULL) {
+        printf("Gagal membuka file!");
+        exit(EXIT_FAILURE);
+    }
+    fwrite(user, sizeof(User), 1, fpw);
+    fclose(fpw);
+}
+
+int loginUser(User *user) {
+    char userLog[50], passLog[50];
+    int login_berhasil = 0;
+    while (!login_berhasil) {
+        printf("Masukkan username :");
+        fgets(userLog, sizeof(userLog), stdin);
+        userLog[strcspn(userLog, "\n")] = '\0';
+
+        printf("Masukkan password :");
+        fgets(passLog, sizeof(passLog), stdin);
+        passLog[strcspn(passLog, "\n")] = '\0';
+
+        if ((strcmp(userLog, user->username) == 0) && (strcmp(passLog, user->password) == 0)) {
+            printf("\n\n=============================================\n");
+            printf("=        SELAMAT ANDA BERHASIL LOGIN!       =\n");
+            printf("=============================================\n");
+            printf("=  Tekan enter untuk melanjutkan permainan  =\n");
+            printf("=============================================\n");
+            getchar();
+            login_berhasil = 1;
+        } else {
+            printf("=============================================\n");
+            printf("=             ANDA GAGAL LOGIN!             =\n");
+            printf("=============================================\n");
+        }
+    }
+    return login_berhasil;
+}
+
 int main() {
     int restart = 1;
     while (restart) {
         tampilanAwal();
 
-        FILE *fpw = fopen("database/login.bin", "wb");
-        if (fpw == NULL) {
-            printf("Gagal membuka file!");
-            return EXIT_FAILURE;
-        }
-
-        char username[50], password[50];
+        User user;
 
         do {
             printf("Masukkan username: ");
-            fgets(username, sizeof(username), stdin);
-            username[strcspn(username, "\n")] = '\0';
-        } while (!cekKosong(username));
+            fgets(user.username, sizeof(user.username), stdin);
+            user.username[strcspn(user.username, "\n")] = '\0';
+        } while (!cekKosong(user.username));
 
         do {
             printf("Masukkan password: ");
-            fgets(password, sizeof(password), stdin);
-            password[strcspn(password, "\n")] = '\0';
-        } while (!cekKosong(password));
+            fgets(user.password, sizeof(user.password), stdin);
+            user.password[strcspn(user.password, "\n")] = '\0';
+        } while (!cekKosong(user.password));
 
-        fwrite(username, sizeof(char), strlen(username), fpw);
-        fwrite(password, sizeof(char), strlen(password), fpw);
-        fclose(fpw);
+        simpanDataUser(&user);
 
         FILE *fpr = fopen("database/login.bin", "rb");
         if (fpr == NULL) {
             printf("Gagal membuka file!");
             return EXIT_FAILURE;
         }
-
-        fread(username, sizeof(char), sizeof(username), fpr);
-        fread(password, sizeof(char), sizeof(password), fpr);
+        fread(&user, sizeof(User), 1, fpr);
         fclose(fpr);
 
         printf("\n\n=============================================\n");
@@ -137,35 +171,11 @@ int main() {
         printf("=============================================\n\n");
         getchar();
 
-        char userLog[50], passLog[50];
-        int login_berhasil = 0;
-        while (!login_berhasil) {
-            printf("Masukkan username :");
-            fgets(userLog, sizeof(userLog), stdin);
-            userLog[strcspn(userLog, "\n")] = '\0';
-
-            printf("Masukkan password :");
-            fgets(passLog, sizeof(passLog), stdin);
-            passLog[strcspn(passLog, "\n")] = '\0';
-
-            if ((strcmp(userLog, username) == 0) && (strcmp(passLog, password) == 0)) {
-                printf("\n\n=============================================\n");
-                printf("=        SELAMAT ANDA BERHASIL LOGIN!       =\n");
-                printf("=============================================\n");
-                printf("=  Tekan enter untuk melanjutkan permainan  =\n");
-                printf("=============================================\n");
-                getchar();
-                login_berhasil = 1;
-            } else {
-                printf("=============================================\n");
-                printf("=             ANDA GAGAL LOGIN!             =\n");
-                printf("=============================================\n");
-            }
-        }
+        loginUser(&user);
 
         int skor = 0;
         permainan(&skor);
-        
+
         restart = 0;
     }
 
