@@ -78,6 +78,31 @@ void pertanyaan1(int *skor) {
     }
     printf("\n=============================================\n");
 }
+void displayCorrectAnswerMessage() {
+    printf("\n=============================\n");
+    printf("  Selamat, Anda Benar! \n");
+    printf("=============================\n");
+}
+
+void askQuestion(const char *question, const char *correctAnswer, int *skor) {
+    char answer[100];
+
+    printf("\nPertanyaan:\n%s\n", question);
+    printf("Masukkan jawaban Anda: ");
+    scanf(" %99[^\n]", answer);
+
+    // Gunakan if-else untuk mengecek jawaban, baik huruf besar maupun kecil
+    if ((strcmp(answer, correctAnswer) == 0) ||
+        (strcmp(answer, "a") == 0 && strcmp(correctAnswer, "A") == 0) ||
+        (strcmp(answer, "b") == 0 && strcmp(correctAnswer, "B") == 0) ||
+        (strcmp(answer, "c") == 0 && strcmp(correctAnswer, "C") == 0) ||
+        (strcmp(answer, "d") == 0 && strcmp(correctAnswer, "D") == 0)) {
+        displayCorrectAnswerMessage();
+        (*skor) += 10;
+        
+    } else {
+        printf("\nJawaban Anda salah. \n");
+    }
 
 void tampilkanMenu(int skor) {
     printf("\n=============================================\n");
