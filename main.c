@@ -3,27 +3,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-void tampilanAwal() {
-    printf("============================================\n");
-    printf("=                                          =\n");
-    printf("=             SELAMAT DATANG               =\n");
-    printf("=                                          =\n");
-    printf("============================================\n");
-    printf("=      WHO WANTS TO BE A MILLIONAIRE       =\n");
-    printf("============================================\n");
-    printf("=                                          =\n");
-    printf("= Tekan enter untuk melanjutkan registrasi =\n");
-    printf("=                                          =\n");
-    printf("============================================\n");
-    getchar();
-}
-
-int cekKosong(char *input) {
-    if (strlen(input) == 0) {
-        printf("Input tidak boleh kosong. Silakan coba lagi.\n");
-        return 0;
-    }
-    return 1;
+void tampilkanMenu() {
+    printf("\n=============================================\n");
+    printf("=        1. Lanjutkan Permainan             =\n");
+    printf("=        2. Keluar dari permainan           =\n");
+    printf("=============================================\n");
+    printf("Pilihan Anda: ");
 }
 
 int main() {
@@ -101,6 +86,22 @@ int main() {
         printf("=  Tekan enter untuk melanjutkan permainan  =\n");
         printf("=============================================\n");
         getchar();
+
+        char pilihan[2];
+
+        while (1) {
+            tampilkanMenu();
+            fgets(pilihan, sizeof(pilihan), stdin);
+            pilihan[strcspn(pilihan, "\n")] = '\0';
+
+            if (pilihan[0] == '2') {
+                printf("\n=============================================\n");
+                printf("=        Terima kasih telah bermain!        =\n");
+                printf("=============================================\n");
+                break;
+            }
+        }
+
     } else {
         printf("=============================================\n");
         printf("=             ANDA GAGAL LOGIN!             =\n");
