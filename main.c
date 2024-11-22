@@ -23,6 +23,7 @@ void tampilkanMenu(int skor) {
     printf("\n=============================================\n");
     printf("=        1. Lanjutkan Permainan             =\n");
     printf("=        2. Keluar dari permainan           =\n");
+    printf("=        3. Restart Permainan               =\n");
     printf("=============================================\n");
     printf("Skor Anda: %d\n", skor);
     printf("Pilihan Anda: ");
@@ -37,128 +38,138 @@ int cekKosong(char *input) {
 }
 
 int main() {
-    tampilanAwal();
+    int restart = 1;
+    while (restart) {
+        tampilanAwal();
 
-    FILE *fpw = fopen("database/login.bin", "wb");
-    if (fpw == NULL) {
-        printf("Gagal membuka file!");
-        return EXIT_FAILURE;
-    }
-
-    char username[50], password[50];
-
-    do {
-        printf("Masukkan username: ");
-        fgets(username, sizeof(username), stdin);
-        username[strcspn(username, "\n")] = '\0';
-    } while (!cekKosong(username));
-
-    do {
-        printf("Masukkan password: ");
-        fgets(password, sizeof(password), stdin);
-        password[strcspn(password, "\n")] = '\0';
-    } while (!cekKosong(password));
-
-    strcat(username, "@");
-    strcat(username, password);
-
-    fwrite(username, sizeof(char), sizeof(username) / sizeof(char), fpw);
-    fclose(fpw);
-
-    FILE *fpr = fopen("database/login.bin", "rb");
-    if (fpr == NULL) {
-        printf("Gagal membuka file!");
-        return EXIT_FAILURE;
-    }
-
-    fread(username, sizeof(char), sizeof(username) / sizeof(char), fpr);
-    fclose(fpr);
-
-    char *string[3];
-    char user[50], pass[50];
-    int ctrl = 0;
-
-    string[0] = strtok(username, "@");
-    while (string[ctrl++] != NULL) {
-        string[ctrl] = strtok(NULL, "@");
-    }
-
-    strcpy(user, string[0]);
-    strcpy(pass, string[1]);
-
-    printf("\n\n=============================================\n");
-    printf("=         Registrasi Anda Berhasil          =\n");
-    printf("=============================================\n");
-    printf("=  Silahkan Login untuk memulai permainan!  =\n");
-    printf("=============================================\n");
-    printf("=       Tekan enter untuk melanjutkan       =\n");
-    printf("=============================================\n\n");
-    getchar();
-
-    char userLog[20], passLog[20];
-    printf("Masukkan username :");
-    fgets(userLog, sizeof(userLog), stdin);
-    userLog[strcspn(userLog, "\n")] = '\0';
-
-    printf("Masukkan password :");
-    fgets(passLog, sizeof(passLog), stdin);
-    passLog[strcspn(passLog, "\n")] = '\0';
-
-    if ((strcmp(userLog, user) == 0) && (strcmp(passLog, pass) == 0)) {
-        printf("\n\n=============================================\n");
-        printf("=        SELAMAT ANDA BERHASIL LOGIN!       =\n");
-        printf("=============================================\n");
-        printf("=  Tekan enter untuk melanjutkan permainan  =\n");
-        printf("=============================================\n");
-        getchar();
-
-        int skor = 0;
-        char pilihan[2];
-
-        while (1) {
-            tampilkanMenu(skor);
-            fgets(pilihan, sizeof(pilihan), stdin);
-            pilihan[strcspn(pilihan, "\n")] = '\0';
-
-            if (pilihan[0] == '1') {
-                printf("\nPertanyaan 1: Apa ibu kota Indonesia?\n");
-                printf("a. Jakarta\nb. Bandung\nc. Surabaya\nd. Yogyakarta\n");
-                printf("Jawaban Anda: ");
-                
-                time_t start_time, end_time;
-                double elapsed_time;
-                char jawaban1;
-
-                time(&start_time);
-                scanf(" %c", &jawaban1);
-                time(&end_time);
-
-                elapsed_time = difftime(end_time, start_time);
-
-                if (elapsed_time > 30) {
-                    printf("\nWaktu habis! Jawaban tidak dihitung.\n");
-                } else {
-                    if (jawaban1 == 'a' || jawaban1 == 'A') {
-                        printf("Jawaban Anda benar!\n");
-                        skor += 1000;
-                    } else {
-                        printf("Jawaban Anda salah.\n");
-                    }
-                }
-
-                printf("\n=============================================\n");
-            } else if (pilihan[0] == '2') {
-                printf("\n=============================================\n");
-                printf("=        Terima kasih telah bermain!        =\n");
-                printf("=============================================\n");
-                break;
-            }
+        FILE *fpw = fopen("database/login.bin", "wb");
+        if (fpw == NULL) {
+            printf("Gagal membuka file!");
+            return EXIT_FAILURE;
         }
 
-    } else {
+        char username[50], password[50];
+
+        do {
+            printf("Masukkan username: ");
+            fgets(username, sizeof(username), stdin);
+            username[strcspn(username, "\n")] = '\0';
+        } while (!cekKosong(username));
+
+        do {
+            printf("Masukkan password: ");
+            fgets(password, sizeof(password), stdin);
+            password[strcspn(password, "\n")] = '\0';
+        } while (!cekKosong(password));
+
+        strcat(username, "@");
+        strcat(username, password);
+
+        fwrite(username, sizeof(char), sizeof(username) / sizeof(char), fpw);
+        fclose(fpw);
+
+        FILE *fpr = fopen("database/login.bin", "rb");
+        if (fpr == NULL) {
+            printf("Gagal membuka file!");
+            return EXIT_FAILURE;
+        }
+
+        fread(username, sizeof(char), sizeof(username) / sizeof(char), fpr);
+        fclose(fpr);
+
+        char *string[3];
+        char user[50], pass[50];
+        int ctrl = 0;
+
+        string[0] = strtok(username, "@");
+        while (string[ctrl++] != NULL) {
+            string[ctrl] = strtok(NULL, "@");
+        }
+
+        strcpy(user, string[0]);
+        strcpy(pass, string[1]);
+
+        printf("\n\n=============================================\n");
+        printf("=         Registrasi Anda Berhasil          =\n");
         printf("=============================================\n");
-        printf("=             ANDA GAGAL LOGIN!             =\n");
+        printf("=  Silahkan Login untuk memulai permainan!  =\n");
         printf("=============================================\n");
+        printf("=       Tekan enter untuk melanjutkan       =\n");
+        printf("=============================================\n\n");
+        getchar();
+
+        char userLog[20], passLog[20];
+        printf("Masukkan username :");
+        fgets(userLog, sizeof(userLog), stdin);
+        userLog[strcspn(userLog, "\n")] = '\0';
+
+        printf("Masukkan password :");
+        fgets(passLog, sizeof(passLog), stdin);
+        passLog[strcspn(passLog, "\n")] = '\0';
+
+        if ((strcmp(userLog, user) == 0) && (strcmp(passLog, pass) == 0)) {
+            printf("\n\n=============================================\n");
+            printf("=        SELAMAT ANDA BERHASIL LOGIN!       =\n");
+            printf("=============================================\n");
+            printf("=  Tekan enter untuk melanjutkan permainan  =\n");
+            printf("=============================================\n");
+            getchar();
+
+            int skor = 0;
+            char pilihan[2];
+
+            while (1) {
+                tampilkanMenu(skor);
+                fgets(pilihan, sizeof(pilihan), stdin);
+                pilihan[strcspn(pilihan, "\n")] = '\0';
+
+                if (pilihan[0] == '1') {
+                    printf("\nPertanyaan 1: Apa ibu kota Indonesia?\n");
+                    printf("a. Jakarta\nb. Bandung\nc. Surabaya\nd. Yogyakarta\n");
+                    printf("Jawaban Anda: ");
+                    
+                    time_t start_time, end_time;
+                    double elapsed_time;
+                    char jawaban1;
+
+                    time(&start_time);
+                    scanf(" %c", &jawaban1);
+                    time(&end_time);
+
+                    elapsed_time = difftime(end_time, start_time);
+
+                    if (elapsed_time > 30) {
+                        printf("\nWaktu habis! Jawaban tidak dihitung.\n");
+                    } else {
+                        if (jawaban1 == 'a' || jawaban1 == 'A') {
+                            printf("Jawaban Anda benar!\n");
+                            skor += 1000;
+                        } else {
+                            printf("Jawaban Anda salah.\n");
+                        }
+                    }
+
+                    printf("\n=============================================\n");
+                } else if (pilihan[0] == '2') {
+                    printf("\n=============================================\n");
+                    printf("=        Terima kasih telah bermain!        =\n");
+                    printf("=============================================\n");
+                    restart = 0;
+                    break;
+                } else if (pilihan[0] == '3') {
+                    printf("\n=============================================\n");
+                    printf("=            Permainan di-restart!          =\n");
+                    printf("=============================================\n");
+                    break;
+                }
+            }
+
+        } else {
+            printf("=============================================\n");
+            printf("=             ANDA GAGAL LOGIN!             =\n");
+            printf("=============================================\n");
+            restart = 0;
+        }
     }
 
     return 0;
