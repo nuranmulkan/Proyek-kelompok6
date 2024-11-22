@@ -18,12 +18,21 @@ void tampilanAwal() {
     getchar();
 }
 
-void tampilkanMenu() {
+void tampilkanMenu(int skor) {
     printf("\n=============================================\n");
     printf("=        1. Lanjutkan Permainan             =\n");
     printf("=        2. Keluar dari permainan           =\n");
     printf("=============================================\n");
+    printf("Skor Anda: %d\n", skor);
     printf("Pilihan Anda: ");
+}
+
+int cekKosong(char *input) {
+    if (strlen(input) == 0) {
+        printf("Input tidak boleh kosong. Silakan coba lagi.\n");
+        return 0;
+    }
+    return 1;
 }
 
 int main() {
@@ -102,14 +111,32 @@ int main() {
         printf("=============================================\n");
         getchar();
 
+        int skor = 0;
         char pilihan[2];
 
         while (1) {
-            tampilkanMenu();
+            tampilkanMenu(skor);
             fgets(pilihan, sizeof(pilihan), stdin);
             pilihan[strcspn(pilihan, "\n")] = '\0';
 
-            if (pilihan[0] == '2') {
+            if (pilihan[0] == '1') {
+                // Pertanyaan contoh aja
+                printf("\nPertanyaan 1: Apa ibu kota Indonesia?\n");
+                printf("a. Jakarta\nb. Bandung\nc. Surabaya\nd. Yogyakarta\n");
+                printf("Jawaban Anda: ");
+                char jawaban1;
+                scanf(" %c", &jawaban1);
+                getchar();
+
+                if (jawaban1 == 'a' || jawaban1 == 'A') {
+                    printf("Jawaban Anda benar!\n");
+                    skor += 1000;
+                } else {
+                    printf("Jawaban Anda salah.\n");
+                }
+
+                printf("\n=============================================\n");
+            } else if (pilihan[0] == '2') {
                 printf("\n=============================================\n");
                 printf("=        Terima kasih telah bermain!        =\n");
                 printf("=============================================\n");
