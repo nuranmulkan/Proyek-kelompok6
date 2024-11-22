@@ -3,6 +3,21 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+void tampilanAwal() {
+    printf("============================================\n");
+    printf("=                                          =\n");
+    printf("=             SELAMAT DATANG               =\n");
+    printf("=                                          =\n");
+    printf("============================================\n");
+    printf("=      WHO WANTS TO BE A MILLIONAIRE       =\n");
+    printf("============================================\n");
+    printf("=                                          =\n");
+    printf("= Tekan enter untuk melanjutkan registrasi =\n");
+    printf("=                                          =\n");
+    printf("============================================\n");
+    getchar();
+}
+
 void tampilkanMenu() {
     printf("\n=============================================\n");
     printf("=        1. Lanjutkan Permainan             =\n");
