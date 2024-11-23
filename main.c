@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <time.h>
 
-int score = 0;
+int skor = 0;
 int restart = 0;
 
 void tampilanAwal() {
@@ -18,7 +18,7 @@ void tampilanAwal() {
     printf("=                                          =\n");
     printf("= Tekan enter untuk melanjutkan registrasi =\n");
     printf("=                                          =\n");
-    printf("============================================\n");
+    printf("============================================");
     getchar();
 }
 
@@ -49,6 +49,7 @@ void pertanyaan1(int *skor) {
     }
     printf("\n=============================================\n");
 }
+
 void displayCorrectAnswerMessage() {
     printf("\n=============================\n");
     printf("  Selamat, Anda Benar! \n");
@@ -60,7 +61,7 @@ void askQuestion(const char *question, const char *correctAnswer, int *skor) {
 
     printf("\nPertanyaan:\n%s\n", question);
     printf("Masukkan jawaban Anda: ");
-    scanf(" %99[^\n]", answer);
+    scanf("%99[^\n]", answer);
 
     // Gunakan if-else untuk mengecek jawaban, baik huruf besar maupun kecil
     if ((strcmp(answer, correctAnswer) == 0) ||
@@ -74,6 +75,7 @@ void askQuestion(const char *question, const char *correctAnswer, int *skor) {
     } else {
         printf("\nJawaban Anda salah. \n");
     }
+}
 
 void tampilkanMenu(int skor) {
     printf("\n=============================================\n");
@@ -111,6 +113,11 @@ void permainan(int *skor) {
 
 int main (int banyakArgumen, char *argumen[]) {
     tampilanAwal();
+
+    if (banyakArgumen != 3) {
+        printf("Cara penggunaan : ./main Username Password!\n");
+        return 1;
+    }
 
     FILE *fpw = fopen("database/login.bin","wb");
     if (fpw == NULL) {
@@ -157,13 +164,13 @@ int main (int banyakArgumen, char *argumen[]) {
     strcpy(user, string[0]);
     strcpy(pass, string[1]);
 
-    printf("\n\n=============================================\n");
+    printf("=============================================\n");
     printf("=         Registrasi Anda Berhasil          =\n");
     printf("=============================================\n");
     printf("=  Silahkan Login ntuk memulai permainan!   =\n");
     printf("=============================================\n");
     printf("=       Tekan enter untuk melanjutkan       =\n");
-    printf("=============================================\n\n");
+    printf("=============================================");
     getchar();
 
     char userLog[20], passLog[20];
@@ -173,13 +180,7 @@ int main (int banyakArgumen, char *argumen[]) {
     printf("Masukkan password :");
     fgets(passLog, sizeof(passLog), stdin);
 
-    
     char userLogin[10], passLogin[10];
-    if (banyakArgumen != 3) {
-        printf("Gagal Login!");
-        printf("Cara penggunaan : ./main Username Password!");
-    }
-
     strcpy(userLogin,argumen[1]);
     strcpy(passLogin,argumen[2]);
 
@@ -197,9 +198,8 @@ int main (int banyakArgumen, char *argumen[]) {
         printf("=============================================\n");
     }
     
-        permainan(skor);
-        restart = 0;
-    }
+    permainan(&skor);
+    restart = 0;
 
     return 0;
 }
