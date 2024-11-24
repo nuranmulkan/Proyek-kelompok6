@@ -169,8 +169,5 @@ int main (int banyakArgumen, char *argumen[]) {
         printf("=============================================\n");
     }
     
-    permainan(&skor);
-    restart = 0;
-
     return 0;
 }
