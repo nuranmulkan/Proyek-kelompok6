@@ -10,54 +10,6 @@ int level = 1;
 void tampilanAwal();
 void selamatDatang();
 
-
-void tampilanAwal() {
-    printf("============================================\n");
-    printf("=                                          =\n");
-    printf("=             SELAMAT DATANG               =\n");
-    printf("=                                          =\n");
-    printf("============================================\n");
-    printf("=      WHO WANTS TO BE A MILLIONAIRE       =\n");
-    printf("============================================\n");
-    printf("=                                          =\n");
-    printf("= Tekan enter untuk melanjutkan registrasi =\n");
-    printf("=                                          =\n");
-    printf("============================================");
-    getchar();
-}
-
-
-void tampilkanMenu() {
-        printf("=============================================\n");
-        printf("=              🎮 MENU UTAMA 🎮             =\n");
-        printf("=============================================\n");
-        printf("=  1️⃣  Lanjutkan Permainan                  =\n");
-        printf("=  2️⃣  Keluar dari Permainan                =\n");
-        printf("=  3️⃣  Restart Permainan                    =\n");
-        printf("=============================================\n");
-        printf("🌟 Skor Anda Saat Ini: %d\n", score);
-        printf("=============================================\n");
-        printf("👉 Pilih opsi Anda (1/2/3): ");
-        int pilihan;
-        scanf("%d", &pilihan);
-            getchar(); 
-
-            switch (pilihan) {
-                case 1:
-                    lanjutkanPermainan();
-                    break;
-                case 2:
-                    keluarPermainan();
-                    break;
-                case 3:
-                    restartPermainan();
-                    break;
-                default:
-                    printf("❌ Pilihan tidak valid. Silakan coba lagi!\n");
-            }
-
-    }
-
 int main (int banyakArgumen, char *argumen[]) {
     tampilanAwal();
 
@@ -148,3 +100,49 @@ int main (int banyakArgumen, char *argumen[]) {
 
     return 0;
 }
+
+void tampilanAwal() {
+    printf("============================================\n");
+    printf("=                                          =\n");
+    printf("=             SELAMAT DATANG               =\n");
+    printf("=                                          =\n");
+    printf("============================================\n");
+    printf("=      WHO WANTS TO BE A MILLIONAIRE       =\n");
+    printf("============================================\n");
+    printf("=                                          =\n");
+    printf("= Tekan enter untuk melanjutkan registrasi =\n");
+    printf("=                                          =\n");
+    printf("============================================");
+    getchar();
+}
+void tampilkanMenu() {
+        printf("=============================================\n");
+        printf("=              🎮 MENU UTAMA 🎮             =\n");
+        printf("=============================================\n");
+        printf("=  1️⃣  Lanjutkan Permainan                  =\n");
+        printf("=  2️⃣  Keluar dari Permainan                =\n");
+        printf("=  3️⃣  Restart Permainan                    =\n");
+        printf("=============================================\n");
+        printf("🌟 Skor Anda Saat Ini: %d\n", score);
+        printf("=============================================\n");
+        printf("👉 Pilih opsi Anda (1/2/3): ");
+        int pilihan;
+        scanf("%d", &pilihan);
+            getchar(); 
+
+            switch (pilihan) {
+                case 1:
+                    lanjutkanPermainan();
+                    break;
+                case 2:
+                    keluarPermainan();
+                    break;
+                case 3:
+                    restartPermainan();
+                    break;
+                default:
+                    printf("❌ Pilihan tidak valid. Silakan coba lagi!\n");
+            }
+
+    }
+
