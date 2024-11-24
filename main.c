@@ -4,8 +4,12 @@
 #include <ctype.h>
 #include <time.h>
 
-int skor = 0;
-int restart = 0;
+int score = 0;
+int level = 1;
+
+void tampilanAwal();
+void selamatDatang();
+
 
 void tampilanAwal() {
     printf("============================================\n");
@@ -22,71 +26,37 @@ void tampilanAwal() {
     getchar();
 }
 
-void pertanyaan1(int *skor) {
-    printf("\nPertanyaan 1: Apa ibu kota Indonesia?\n");
-    printf("a. Jakarta\nb. Bandung\nc. Surabaya\nd. Yogyakarta\n");
-    printf("Jawaban Anda: ");
-    
-    time_t start_time, end_time;
-    double elapsed_time;
-    char jawaban1;
 
-    time(&start_time);
-    scanf(" %c", &jawaban1);
-    time(&end_time);
+void tampilkanMenu() {
+        printf("=============================================\n");
+        printf("=              🎮 MENU UTAMA 🎮             =\n");
+        printf("=============================================\n");
+        printf("=  1️⃣  Lanjutkan Permainan                  =\n");
+        printf("=  2️⃣  Keluar dari Permainan                =\n");
+        printf("=  3️⃣  Restart Permainan                    =\n");
+        printf("=============================================\n");
+        printf("🌟 Skor Anda Saat Ini: %d\n", score);
+        printf("=============================================\n");
+        printf("👉 Pilih opsi Anda (1/2/3): ");
+        int pilihan;
+        scanf("%d", &pilihan);
+            getchar(); 
 
-    elapsed_time = difftime(end_time, start_time);
+            switch (pilihan) {
+                case 1:
+                    lanjutkanPermainan();
+                    break;
+                case 2:
+                    keluarPermainan();
+                    break;
+                case 3:
+                    restartPermainan();
+                    break;
+                default:
+                    printf("❌ Pilihan tidak valid. Silakan coba lagi!\n");
+            }
 
-    if (elapsed_time > 30) {
-        printf("\nWaktu habis! Jawaban tidak dihitung.\n");
-    } else {
-        if (jawaban1 == 'a' || jawaban1 == 'A') {
-            printf("Jawaban Anda benar!\n");
-            *skor += 1000;
-        } else {
-            printf("Jawaban Anda salah.\n");
-        }
     }
-    printf("\n=============================================\n");
-}
-
-void displayCorrectAnswerMessage() {
-    printf("\n=============================\n");
-    printf("  Selamat, Anda Benar! \n");
-    printf("=============================\n");
-}
-
-void askQuestion(const char *question, const char *correctAnswer, int *skor) {
-    char answer[100];
-
-    printf("\nPertanyaan:\n%s\n", question);
-    printf("Masukkan jawaban Anda: ");
-    scanf("%99[^\n]", answer);
-
-    // Gunakan if-else untuk mengecek jawaban, baik huruf besar maupun kecil
-    if ((strcmp(answer, correctAnswer) == 0) ||
-        (strcmp(answer, "a") == 0 && strcmp(correctAnswer, "A") == 0) ||
-        (strcmp(answer, "b") == 0 && strcmp(correctAnswer, "B") == 0) ||
-        (strcmp(answer, "c") == 0 && strcmp(correctAnswer, "C") == 0) ||
-        (strcmp(answer, "d") == 0 && strcmp(correctAnswer, "D") == 0)) {
-        displayCorrectAnswerMessage();
-        (*skor) += 10;
-        
-    } else {
-        printf("\nJawaban Anda salah. \n");
-    }
-}
-
-void tampilkanMenu(int skor) {
-    printf("\n=============================================\n");
-    printf("=        1. Lanjutkan Permainan             =\n");
-    printf("=        2. Keluar dari permainan           =\n");
-    printf("=        3. Restart Permainan               =\n");
-    printf("=============================================\n");
-    printf("Skor Anda: %d\n", skor);
-    printf("Pilihan Anda: ");
-}
-
 void permainan(int *skor) {
     char pilihan[2];
     
@@ -115,6 +85,7 @@ int main (int banyakArgumen, char *argumen[]) {
     tampilanAwal();
 
     if (banyakArgumen != 3) {
+        printf("Harus terdapat 3 argumen saat menjalankan program!\n");
         printf("Cara penggunaan : ./main Username Password!\n");
         return 1;
     }
