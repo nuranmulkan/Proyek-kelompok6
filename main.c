@@ -57,29 +57,6 @@ void tampilkanMenu() {
             }
 
     }
-void permainan(int *skor) {
-    char pilihan[2];
-    
-    while (1) {
-        tampilkanMenu(*skor);
-        fgets(pilihan, sizeof(pilihan), stdin);
-        pilihan[strcspn(pilihan, "\n")] = '\0';
-
-        if (pilihan[0] == '1') {
-            pertanyaan1(skor);
-        } else if (pilihan[0] == '2') {
-            printf("\n=============================================\n");
-            printf("=        Terima kasih telah bermain!        =\n");
-            printf("=============================================\n");
-            break;
-        } else if (pilihan[0] == '3') {
-            printf("\n=============================================\n");
-            printf("=            Permainan di-restart!          =\n");
-            printf("=============================================\n");
-            break;
-        }
-    }
-}
 
 int main (int banyakArgumen, char *argumen[]) {
     tampilanAwal();
@@ -168,6 +145,6 @@ int main (int banyakArgumen, char *argumen[]) {
         printf("=             ANDA GAGAL LOGIN!             =\n");
         printf("=============================================\n");
     }
-    
+
     return 0;
 }
