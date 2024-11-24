@@ -145,4 +145,38 @@ void tampilkanMenu() {
             }
 
     }
+   void lanjutkanPermainan() {
+        printf("\n=============================================\n");
+        printf("=       Anda memilih untuk melanjutkan!     =\n");
+        printf("=============================================\n");
+        switch (level) {
+        case 1:
+            pertanyaan1();
+            break;
+        case 2:
+            pertanyaan2();
+            break;
+        default:
+            printf("âŒ Pertanyaan untuk level %d belum tersedia!\n", level);
+    }
+}
+    
+    void keluarPermainan() {
+        printf("\n=============================================\n");
+        printf("=       Terima kasih telah bermain!         =\n");
+        printf("=============================================\n");
+        printf("ðŸ‘‹ Sampai jumpa lagi!\n");
+    }
+
+    \
+    void restartPermainan() {
+        printf("\n=============================================\n");
+        printf("=       Permainan telah di-restart!         =\n");
+        printf("=============================================\n");
+        score = 0; 
+        level = 1;
+        printf("ðŸŒŸ Skor Anda sekarang: %d\n", score);
+        getchar();
+        pertanyaan1();
+    }
 
